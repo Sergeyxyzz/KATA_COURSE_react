@@ -8,30 +8,16 @@ export default class TodoListItem extends React.Component {
 		important: false,
 	}
 
-	onLabelClick() {
-		console.log(`Done ${this.props.label}`)
-
-		this.setState(({ done }) => {
-			return {
-				done: !done,
-			}
-		})
-	}
-
-	onMarkImportant() {
-		this.setState((state) => {
-			return {
-				important: !state.important,
-			}
-		})
-	}
-
 	render() {
 		// получаем пропсы через ДЕСТРУКТУРИЗАЦИЮ
-		const { label, onDeleted } = this.props
-
-		// получаем стейт
-		const { done, important } = this.state
+		const {
+			label,
+			onDeleted,
+			onToggleImportant,
+			onToggleDone,
+			important,
+			done,
+		} = this.props
 
 		let classNames = 'todo-list-item'
 
@@ -44,13 +30,12 @@ export default class TodoListItem extends React.Component {
 			classNames += ' important'
 		}
 
-
 		return (
 			<span className={classNames}>
 				<span
 					className='todo-list-item-label'
 					// пишем this.onLabelClick() тк функция объявлена в этом классе
-					onClick={() => this.onLabelClick()}
+					onClick={onToggleDone}
 				>
 					{label}
 				</span>
@@ -58,7 +43,7 @@ export default class TodoListItem extends React.Component {
 				<button
 					type='button'
 					className='btn btn-outline-success btn-sm float-right'
-					onClick={() => this.onMarkImportant()}
+					onClick={onToggleImportant}
 				>
 					<i className='fa fa-exclamation' />
 				</button>
